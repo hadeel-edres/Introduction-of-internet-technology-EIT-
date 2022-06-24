@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<head>
+
+    <meta charset="utf-8">
+
+
+<style>
+#eck_4{
+    width: 200px;
+    height: 200px;
+    background-color: brown;
+    display: none;
+    position: relative;
+
+    }
+
+.bold{
+    font-weight: bold;
+    }
+</style>
+</head>
+
+<body>
+
+<h1> Reaktion Tester</h1>
+<p>teste deine Fähigkeit :) , klicke auf Vierecke und Kreise !</p>
+<p class="bold">Deine Zeit: <span id="dauer"></span></p>
+<p class="bold">Schnellste Zeit: <span id="schnell"></span></p>
+
+<div id="eck_4"></div>
+
+</body>
+
+<script>
+
+var start = new Date().getTime();
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+function makeElement(){
+
+    var top = Math.random() * 400;
+    var left = Math.random() * 400;
+    var width = Math.random() * 400;
+
+    if(Math.random() > 0.5){
+        document.getElementById("eck_4").style.borderRadius="50%";
+    }else{
+        document.getElementById("eck_4").style.borderRadius="0";
+    }
+    var schnell = new Date().getTime();
+    
+    if(start < schnell){
+        document.getElementById("schnell").innerHTML = schnell + "s";
+
+    }
+
+
+    document.getElementById("eck_4").style.background=  getRandomColor();
+    document.getElementById("eck_4").style.top=  top + "px";
+    document.getElementById("eck_4").style.left=  left + "px";
+    document.getElementById("eck_4").style.width=  width + "px";
+    document.getElementById("eck_4").style.height=  width + "px";
+    document.getElementById("eck_4").style.display= "block"; 
+
+    start = new Date().getTime();
+}
+
+function get_afterTime_Element(){
+    setTimeout(makeElement , Math.random() * 2000);
+}
+
+
+get_afterTime_Element();
+document.getElementById("eck_4").onclick = function(){
+    document.getElementById("eck_4").style.display= "none";
+    var end = new Date().getTime();
+    var dauer = (end - start) / 10000;
+    document.getElementById("dauer").innerHTML = dauer + "s";
+
+get_afterTime_Element();
+}
+
+
+</script>

@@ -1,0 +1,125 @@
+<!DOCTYPE html> 
+	<html> 
+	<head> 
+	<meta charset="utf-8">
+	<title>Tabellenmanipulation</title> 
+	 
+	
+	<style> 
+	body { 
+	text-align: center; 
+	font-family: sans-serif; 
+	} 
+	
+	tr { 
+	height: 20px; 
+	
+	} 
+	
+	table { 
+	border: 1px solid black; 
+	border-collapse: collapse; 
+	margin: auto; 
+	} 
+	
+	
+	td, th { 
+	 
+	border: 2px solid #6E6E6E; 
+	width: 20px;
+	} 
+	
+	</style> 
+	
+	    </head> 
+	<body> 
+	
+	<h1> <font color="#BF00FF ">DOM-Tabellenmanipulation</h1> 
+	<div id="info" style="margin-bottom: 1em">Dimension: 0 x 0</div> 
+
+	<input type="button" 
+	value="Spalte hinzufügen"
+	onclick="addAColumn()"> 
+	
+	<input type="button"
+	onclick="removeAColumn()"
+	value="Spalte entfernen" > 
+	
+	<input type="button" 
+	onclick="addARow()"
+	value="Zeile hinzufügen"> 
+	
+	<input type="button"
+	onclick="removeARow()"
+	value="Zeile entfernen"> 
+	<br>
+	<table id="table"><br></table> 
+
+	<script> 
+	
+	var getTable = document.getElementById("table"); 
+	var rowsNum = 0;
+	var colsNum = 0; 
+	 
+	// Checks whether tha table is empty : 
+   function fullTable() { 
+    return colsNum > 0 && rowsNum > 0; 
+   } 
+   
+	// Ubdates the dimension of the table :
+	function Ubdates() { 
+	document.getElementById('info').innerHTML = 'Dimension: ' + rowsNum + ' x ' + colsNum; 
+	} 
+	
+	// Add a line , if there is a table :
+	function addARow() { 
+	
+	var row = getTable.insertRow(-1); 
+	
+	for (var j = 0; j < colsNum; j++) { 
+	var cell = row.insertCell(-1);  
+	} 
+	rowsNum++; 
+	
+	Ubdates(); } 
+	
+	// Add a Column :
+	function addAColumn() { 
+	
+	var rows = getTable.rows; 
+	
+	for (var i = 0; i < rows.length; i++) { 
+	var cell = rows[i].insertCell(-1); 
+	} 
+	colsNum++; 
+	
+	Ubdates(); } 
+	
+	// deletes a line :
+	function removeARow() { 
+	
+	if (fullTable()) { 
+	getTable.deleteRow(-1); 
+	rowsNum--; 
+	} 
+	
+	Ubdates(); } 
+	
+	// deletes a line :
+	function removeAColumn() { 
+	
+	if (fullTable()) { 
+	var rows = getTable.rows; 
+	
+	for (var k = 0; k < rows.length; k++) { 
+	rows[k].deleteCell(-1); 
+	} 
+	colsNum--; 
+	} 
+	Ubdates(); } 
+	
+	</script> 
+	
+	  </body> 
+	</html>
+

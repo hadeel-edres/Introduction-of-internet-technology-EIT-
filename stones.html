@@ -1,0 +1,211 @@
+<!DOCTYPE html> 
+	<html lang="en"> 
+	<head> 
+	<meta charset="UTF-8"> 
+	<title>Stone Game</title> 
+	
+	<style> 
+	body { 
+	font-family: sans-serif; 
+	text-align: center; 
+	margin: 0 auto; 
+	} 
+	
+	canvas { 
+	border: 2px solid Black; 
+	
+	} 
+	</style> 
+	
+	</head> 
+	
+	<body> 
+	
+	<h1>Stone Game</h1> 
+	
+	<canvas width="800" 
+	height="400" 
+	id="canvas"></canvas> 
+	<div id="info">
+	</div> 
+	
+	<script> 
+	
+	const canvas = document.getElementById('canvas'); 
+	
+	const cotx = canvas.getContext('2d'); 
+	
+	function Square(cotx, color, x, y) { 
+	this.x = x; 
+	this.y = y; 
+	this.width = 10; 
+	this.height = 10; 
+	this.color = color; 
+	this.cotx = cotx; 
+	
+	this.left = function () { 
+	return this.x; 
+	}; 
+	
+	this.right = function () { 
+	return this.x + this.width; 
+	}; 
+	
+	this.top = function () { 
+	return this.y; 
+	}; 
+	
+	this.bottom = function () { 
+	return this.y + this.height; 
+	}; 
+	
+	this.draw = function () { 
+	this.cotx.fillStyle = color; 
+	this.cotx.fillRect(this.x, this.y, this.width, this.height); 
+	this.cotx.stroke(); 
+	}; 
+	
+	
+	this.move = function () { 
+	this.x += 1; 
+	
+	// entferne Element aus Array 
+	if (this.x > canvas.width) { 
+	squares.shift(); 
+	} 
+	}; 
+	
+	this.collides = function (square) { 
+	return !( 
+	square.left() > this.right() || 
+	square.right() < this.left() || 
+	square.top() > this.bottom() || 
+	square.bottom() < this.top() 
+	); 
+	} 
+	} 
+	
+	var mainSquare = new Square(cotx, 'red', 100, 100); 
+	mainSquare.dX = 0; 
+	mainSquare.dY = 0; 
+	
+	mainSquare.keyMove = function () { 
+	
+	var x_ = this.x + this.dX; 
+	var y_ = this.y + this.dY; 
+	
+	this.x = Math.min(canvas.width - this.width, Math.max(0, x_)); 
+	this.y = Math.min(canvas.height - this.height, Math.max(0, y_)); 
+	
+	
+	}; 
+	
+	document.body.addEventListener('keydown', function (e) { 
+	
+	if (e.keyCode == 27) { 
+	stopGame(); 
+	} 
+	
+	if (e.keyCode == 37) { 
+	mainSquare.dX = -2; 
+	
+	} 
+	
+	if (e.keyCode == 38) { 
+	mainSquare.dY = -2; 
+	} 
+	
+	if (e.keyCode == 39) { 
+	mainSquare.dX = 2; 
+	} 
+	
+	if (e.keyCode == 40) { 
+	mainSquare.dY = 2; 
+	} 
+	
+	console.log(mainSquare.dX); 
+	console.log(mainSquare.dY); 
+	
+	
+	}); 
+	
+	document.body.addEventListener('keyup', function (e) { 
+	if (e.keyCode == 37) { 
+	mainSquare.dX = 0; 
+	} 
+	
+	if (e.keyCode == 38) { 
+	mainSquare.dY = 0; 
+	} 
+	
+	if (e.keyCode == 39) { 
+	mainSquare.dX = 0; 
+	} 
+	
+	if (e.keyCode == 40) { 
+	mainSquare.dY = 0; 
+	} 
+	} 
+	); 
+	
+	
+	var stop = false; 
+	var squares = []; 
+	var start = new Date().getTime(); 
+	
+	function stopGame() { 
+	stop = true; 
+	var elapsed = Math.floor((new Date().getTime() - start) / 1000); 
+	document.getElementById('info').innerHTML = "Game over! Du hast " + elapsed + " Sekunden durchgehalten!" 
+	} 
+	
+	function loop() { 
+	
+	cotx.clearRect(0, 0, 1000, 1000); 
+	
+	if (Math.random() >= 0.95) { 
+	
+	var newSquare = new Square(cotx, 'black', 0, Math.max(0, Math.floor(Math.random() * canvas.height) - 10)); 
+	var collision = false; 
+	
+	for (var i = 0; i < squares.length; i++) { 
+	var square = squares[i]; 
+	if (square.collides(newSquare)) { 
+	collision = true; 
+	} 
+	} 
+	
+	if (!collision) { 
+	squares.push(newSquare); 
+	} 
+	} 
+	
+	mainSquare.keyMove(); 
+	mainSquare.draw(); 
+	
+	for (var i = 0; i < squares.length; i++) { 
+	var square = squares[i]; 
+	
+	square.move(); 
+	square.draw(); 
+	
+	if (mainSquare.collides(square)) { 
+	stopGame(); 
+	} 
+	} 
+	
+	
+	if (!stop) { 
+	requestAnimationFrame(loop); 
+	} 
+	
+	} 
+	
+	loop(); 
+	
+	
+	</script> 
+	
+	</body> 
+	</html>
+

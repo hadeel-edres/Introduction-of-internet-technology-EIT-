@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+	<html lang="en">
+	<head>
+	<meta charset="UTF-8">
+	<title>Smiley</title>
+	
+	<style>
+	body {
+	text-align: center;
+	background-color:#BDBDBD;
+	font-family:serif;
+	}
+	
+	#slider {
+	width: 400px;
+	}
+	</style>
+	</head>
+	<body>
+	
+	<h1><font color="#0174DF">Smiley</h1>
+	
+	<canvas id="canvas" width="400" height="400" style="background-color:#BDBDBD"></canvas>
+	
+	<br>
+	
+	<input type="range" min="-75" max="75" id="slider" value="0">
+	
+	<script>
+	var canvas = document.getElementById("canvas");
+	var ctx = canvas.getContext("2d");
+	
+	
+	function drawSmiley(happiness) {
+	
+	ctx.fillStyle = "yellow";
+	ctx.lineWidth = 5;
+	
+	// Großer Kreis im Hintergrund
+	ctx.beginPath();
+	ctx.arc(200, 200, 190, (Math.PI / 180) * 0, (Math.PI / 180) * 360);
+	ctx.fill();
+	ctx.stroke();
+	
+	
+	ctx.fillStyle = "black";
+	
+	// Mund
+	ctx.beginPath();
+	var y = 270;
+	ctx.moveTo(75, y);
+	ctx.quadraticCurveTo(200, y + happiness, 325, y);
+	ctx.stroke();
+	
+	// Linkes Auge
+	ctx.beginPath();
+	ctx.arc(100, 130, 25 + 0.01 * happiness, 0, 2 * Math.PI);
+	ctx.fill();
+	
+	// Rechtes Auge
+	ctx.beginPath();
+	ctx.arc(270, 130, 25 + 0.01 * happiness, 0, 2 * Math.PI);
+	ctx.fill();
+	}
+	
+	var slider = document.getElementById("slider");
+	slider.addEventListener('input', function (ev) {
+	
+	var happiness = parseInt(ev.target.value);
+	console.log(happiness);
+	
+	drawSmiley(happiness);
+	
+	});
+	window.addEventListener('load', function (ev) {
+	drawSmiley(parseInt(slider.value));
+	})
+	
+	
+	</script>
+	
+	</body>
+	</html>
+

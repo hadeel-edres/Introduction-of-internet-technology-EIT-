@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+	<html lang="en">
+	
+	<title>strasse</title>
+	
+	<style>
+	
+	
+	html, body {
+	background-image: url(images/b.ground.svg);
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	background-repeat: repeat-x;
+	background-size: auto 100%;
+	
+	}
+	
+	@keyframes backw {
+	from { left: 90%;
+	} to { left: -30%;
+	}
+	
+	}
+	@keyframes  forw{
+	from { left: -30%;
+	}to {
+	left: 90%;
+	}
+
+	}
+	
+	.backw {
+	animation: 3s backw linear infinite;
+	height: 50%;
+	bottom: 7%;
+	position: absolute;
+	z-index: 2;
+	transform: scaleX(-1);
+	left: -40%;
+	}
+	
+	.forw {
+	animation: 3s forw linear infinite;
+	height: 50%;
+	bottom: -5%;
+	position: absolute;
+	z-index: 5;
+	left: -40%;
+	}
+	
+	.car1 {
+	animation-delay: 1s;
+	}
+	
+	.car2 {
+	animation-delay: 3.5s;
+	}
+	
+	.car3 {
+	animation-delay: 5s;
+	}
+	
+	.car4 {
+	animation-delay: 8s;
+	}
+	
+	</style>
+	
+	
+	</head>
+	<body>
+	
+	<img src="images/car1.svg" class="car1 forw">
+	<img src="images/car3.svg" class="car3 forw">
+	<img src="images/car4.svg" class="car2 backw">
+	<img src="images/car2.svg" class="car4 backw">
+	
+	</body>
+	</html>
+
